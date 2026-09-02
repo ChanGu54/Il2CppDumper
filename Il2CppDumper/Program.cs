@@ -179,7 +179,7 @@ namespace Il2CppDumper
                     break;
             }
             var version = config.ForceIl2CppVersion ? config.ForceVersion : metadata.Version;
-            il2Cpp.SetProperties(version, metadata.metadataUsagesCount);
+            il2Cpp.SetProperties(version, metadata.metadataUsagesCount, metadata);
             Console.WriteLine($"Il2Cpp Version: {il2Cpp.Version}");
             if (config.ForceDump || il2Cpp.CheckDump())
             {
@@ -214,7 +214,7 @@ namespace Il2CppDumper
                     {
                         Console.WriteLine("Use custom PE loader");
                         il2Cpp = PELoader.Load(il2cppPath);
-                        il2Cpp.SetProperties(version, metadata.metadataUsagesCount);
+                        il2Cpp.SetProperties(version, metadata.metadataUsagesCount, metadata);
                         flag = il2Cpp.PlusSearch(metadata.methodDefs.Count(x => x.methodIndex >= 0), metadata.typeDefs.Length, metadata.imageDefs.Length);
                     }
                 }
@@ -239,7 +239,7 @@ namespace Il2CppDumper
                 {
                     var typeDef = metadata.typeDefs[0];
                     var il2CppType = il2Cpp.types[typeDef.byvalTypeIndex];
-                    metadata.ImageBase = il2CppType.data.typeHandle - metadata.header.typeDefinitionsOffset;
+                    metadata.ImageBase = il2CppType.data.typeHandle - metadata.GetTypeDefinitionsOffset();
                 }
             }
             catch (Exception e)
@@ -261,15 +261,31 @@ namespace Il2CppDumper
             if (config.GenerateStruct)
             {
                 Console.WriteLine("Generate struct...");
-                var scriptGenerator = new StructGenerator(executor);
-                scriptGenerator.WriteScript(outputDir);
-                Console.WriteLine("Done!");
+                try
+                {
+                    var scriptGenerator = new StructGenerator(executor);
+                    scriptGenerator.WriteScript(outputDir);
+                    Console.WriteLine("Done!");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    Console.WriteLine("ERROR: Some errors in generating struct");
+                }
             }
             if (config.GenerateDummyDll)
             {
                 Console.WriteLine("Generate dummy dll...");
-                DummyAssemblyExporter.Export(executor, outputDir, config.DummyDllAddToken);
-                Console.WriteLine("Done!");
+                try
+                {
+                    DummyAssemblyExporter.Export(executor, outputDir, config.DummyDllAddToken);
+                    Console.WriteLine("Done!");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    Console.WriteLine("ERROR: Some errors in generating dummy dll");
+                }
             }
         }
     }
