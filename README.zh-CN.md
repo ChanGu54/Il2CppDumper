@@ -20,7 +20,7 @@ Unity il2cpp逆向工程
 
 ## 使用说明
 
-需要[.NET 6.0或.NET 8.0运行时](https://dotnet.microsoft.com/download)。
+需要[.NET 8.0运行时](https://dotnet.microsoft.com/download)。
 
 直接运行Il2CppDumper.exe并依次选择il2cpp的可执行文件和global-metadata.dat文件，然后根据提示输入相应信息。
 
@@ -134,7 +134,7 @@ Il2CppDumper.exe <executable-file> <global-metadata> <output-directory>
 dotnet build Il2CppDumper.sln
 ```
 
-目标框架为`net6.0`和`net8.0`，唯一的依赖是`Mono.Cecil`
+目标框架为`net8.0`，唯一的依赖是`Mono.Cecil`
 
 ## 常见问题
 

@@ -20,7 +20,7 @@ Unity il2cpp 리버스 엔지니어링
 
 ## 사용법
 
-[.NET 6.0 또는 .NET 8.0 런타임](https://dotnet.microsoft.com/download)이 필요합니다.
+[.NET 8.0 런타임](https://dotnet.microsoft.com/download)이 필요합니다.
 
 `Il2CppDumper.exe`를 실행한 뒤 il2cpp 실행 파일과 `global-metadata.dat` 파일을 선택하고, 안내에 따라 정보를 입력하세요.
 
@@ -138,7 +138,7 @@ BinaryNinja용입니다.
 dotnet build Il2CppDumper.sln
 ```
 
-`net6.0`과 `net8.0`을 타겟으로 하며, 외부 의존성은 `Mono.Cecil` 하나입니다.
+`net8.0`을 타겟으로 하며, 외부 의존성은 `Mono.Cecil` 하나입니다.
 
 ## 자주 발생하는 오류
 

@@ -20,7 +20,7 @@ Unity il2cpp reverse engineer
 
 ## Usage
 
-Requires the [.NET 6.0 or .NET 8.0 runtime](https://dotnet.microsoft.com/download).
+Requires the [.NET 8.0 runtime](https://dotnet.microsoft.com/download).
 
 Run `Il2CppDumper.exe` and choose the il2cpp executable file and `global-metadata.dat` file, then enter the information as prompted
 
@@ -138,7 +138,7 @@ Available options:
 dotnet build Il2CppDumper.sln
 ```
 
-Targets `net6.0` and `net8.0`, the only dependency is `Mono.Cecil`
+Targets `net8.0`, the only dependency is `Mono.Cecil`
 
 ## Common errors
 
