@@ -565,6 +565,12 @@ namespace Il2CppDumper
         public uint token;
     }
 
+    public class Il2CppInlineArrayLength
+    {
+        public int typeIndex;
+        public int length;
+    }
+
     // v38+ metadata section format
     public class Il2CppSectionMetadata
     {

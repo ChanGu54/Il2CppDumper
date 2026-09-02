@@ -796,6 +796,13 @@ namespace Il2CppDumper
                         structInfo.Fields.Add(structFieldInfo);
                     }
                 }
+                //[InlineArray(N)]: the single instance field is stored N times
+                if (structInfo.Fields.Count == 1
+                    && metadata.inlineArrayLengthDic.TryGetValue(typeDef.byvalTypeIndex, out var inlineArrayLength)
+                    && inlineArrayLength > 1)
+                {
+                    structInfo.Fields[0].ArrayLength = inlineArrayLength;
+                }
             }
         }
 
@@ -1188,13 +1195,14 @@ namespace Il2CppDumper
 
         private static void AppendField(StringBuilder sb, StructFieldInfo field, string padding)
         {
+            var arraySuffix = field.ArrayLength > 1 ? $"[{field.ArrayLength}]" : string.Empty;
             if (field.IsCustomType)
             {
-                sb.Append($"{padding}struct {field.FieldTypeName} {field.FieldName};\n");
+                sb.Append($"{padding}struct {field.FieldTypeName} {field.FieldName}{arraySuffix};\n");
             }
             else
             {
-                sb.Append($"{padding}{field.FieldTypeName} {field.FieldName};\n");
+                sb.Append($"{padding}{field.FieldTypeName} {field.FieldName}{arraySuffix};\n");
             }
         }
 

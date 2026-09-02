@@ -23,6 +23,7 @@ namespace Il2CppDumper
         public bool IsValueType;
         public bool IsCustomType;
         public int Offset = -1;
+        public int ArrayLength = 1;
     }
 
     public class StructVTableMethodInfo

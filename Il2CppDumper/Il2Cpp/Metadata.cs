@@ -30,6 +30,8 @@ namespace Il2CppDumper
         public Dictionary<Il2CppMetadataUsage, SortedDictionary<uint, uint>> metadataUsageDic;
         public long metadataUsagesCount;
         public int[] nestedTypeIndices;
+        public Il2CppInlineArrayLength[] inlineArrayLengths = Array.Empty<Il2CppInlineArrayLength>();
+        public readonly Dictionary<int, int> inlineArrayLengthDic = new();
         public Il2CppEventDefinition[] eventDefs;
         public Il2CppGenericContainer[] genericContainers;
         public Il2CppFieldRef[] fieldRefs;
@@ -231,6 +233,14 @@ namespace Il2CppDumper
             {
                 rgctxEntries = ReadMetadataClassArray<Il2CppRGCTXDefinition>(header.rgctxEntriesOffset, header.rgctxEntriesCount);
             }
+            if (Version >= 104 && header.typeInlineArrays != null && header.typeInlineArrays.count > 0)
+            {
+                inlineArrayLengths = ReadMetadataClassArray<Il2CppInlineArrayLength>(header.typeInlineArrays);
+                foreach (var item in inlineArrayLengths)
+                {
+                    inlineArrayLengthDic[item.typeIndex] = item.length;
+                }
+            }
             if (Version >= 108)
             {
                 methodSpecsOnGenericType = ReadMetadataClassArray<Il2CppMethodSpecOnGenericType>(header.methodSpecsOnGenericType);
@@ -297,6 +307,8 @@ namespace Il2CppDumper
                 return (T)(object)ReadGenericParameter();
             if (typeof(T) == typeof(Il2CppFieldRef))
                 return (T)(object)ReadFieldRef();
+            if (typeof(T) == typeof(Il2CppInlineArrayLength))
+                return (T)(object)ReadInlineArrayLength();
             if (typeof(T) == typeof(Il2CppStringLiteral))
                 return (T)(object)ReadStringLiteral();
             if (typeof(T) == typeof(Il2CppMethodSpecOnGenericType))
@@ -616,6 +628,12 @@ namespace Il2CppDumper
             constraintsCount = ReadInt16(),
             num = ReadUInt16(),
             flags = ReadUInt16()
+        };
+
+        private Il2CppInlineArrayLength ReadInlineArrayLength() => new()
+        {
+            typeIndex = ReadMetadataIndex(typeIndexSize),
+            length = ReadInt32()
         };
 
         private Il2CppFieldRef ReadFieldRef() => new()
@@ -1032,6 +1050,8 @@ namespace Il2CppDumper
                     return Version >= 106 ? genericContainerSizeV106 : 12 + genericParameterIndexSize;
                 if (type == typeof(Il2CppGenericParameter))
                     return genericContainerIndexSize + 4 + 2 + 2 + 2 + 2;
+                if (type == typeof(Il2CppInlineArrayLength))
+                    return typeIndexSize + 4;
                 if (type == typeof(Il2CppFieldRef))
                     return typeIndexSize + fieldIndexSize;
                 if (type == typeof(Il2CppStringLiteral))
