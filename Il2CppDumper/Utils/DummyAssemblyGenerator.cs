@@ -20,6 +20,7 @@ namespace Il2CppDumper
         private readonly Dictionary<Il2CppGenericParameter, GenericParameter> genericParameterDic = new();
         private readonly MethodDefinition attributeAttribute;
         private readonly TypeReference stringType;
+        private TypeDefinition enumType;
         private readonly TypeSystem typeSystem;
         private readonly Dictionary<int, FieldDefinition> fieldDefinitionDic = new();
         private readonly Dictionary<int, PropertyDefinition> propertyDefinitionDic = new();
@@ -100,6 +101,10 @@ namespace Il2CppDumper
                     var namespaceName = metadata.GetStringFromIndex(typeDef.namespaceIndex);
                     var typeName = metadata.GetStringFromIndex(typeDef.nameIndex);
                     var typeDefinition = new TypeDefinition(namespaceName, typeName, (TypeAttributes)typeDef.flags);
+                    if (namespaceName == "System" && typeName == "Enum")
+                    {
+                        enumType = typeDefinition;
+                    }
                     typeDefinitionDic.Add(typeDef, typeDefinition);
                     typeModuleDic[typeDef] = moduleDefinition;
                     if (typeDef.declaringTypeIndex == -1)
@@ -176,6 +181,11 @@ namespace Il2CppDumper
                     {
                         var parentType = il2Cpp.types[typeDef.parentIndex];
                         var parentTypeRef = GetTypeReference(typeDefinition, parentType);
+                        //since v35 elementTypeIndex is gone and enums keep their underlying type in parentIndex
+                        if (typeDef.IsEnum && parentTypeRef.FullName != "System.Enum")
+                        {
+                            parentTypeRef = GetEnumTypeReference(typeDefinition);
+                        }
                         typeDefinition.BaseType = parentTypeRef;
                     }
 
@@ -742,6 +752,15 @@ namespace Il2CppDumper
                     Console.WriteLine($"ERROR: Error while restoring attributeIndex {attributeIndex}");
                 }
             }
+        }
+
+        private TypeReference GetEnumTypeReference(TypeDefinition typeDefinition)
+        {
+            if (enumType != null)
+            {
+                return typeDefinition.Module.ImportReference(enumType);
+            }
+            return typeDefinition.Module.ImportReference(typeof(Enum));
         }
 
         private static bool TryRestoreCustomAttribute(TypeDefinition attributeType, ModuleDefinition moduleDefinition, Collection<CustomAttribute> customAttributes)

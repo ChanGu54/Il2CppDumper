@@ -438,6 +438,15 @@ namespace Il2CppDumper
 
         private int[] ReadMetadataIndexArray(Il2CppSectionMetadata section, int indexSize)
         {
+            //the section header knows the real element width, the index size computed from the item count can be smaller
+            if (section.count > 0)
+            {
+                var actualSize = section.sectionSize / section.count;
+                if (actualSize == 1 || actualSize == 2 || actualSize == 4)
+                {
+                    indexSize = actualSize;
+                }
+            }
             Position = (ulong)section.offset;
             var result = new int[section.count];
             for (var i = 0; i < result.Length; i++)
@@ -972,6 +981,16 @@ namespace Il2CppDumper
                 usage++;
             }
             return usage;
+        }
+
+        public uint GetAttributeCtorMethodIndex(uint index)
+        {
+            //since v104 the ctor in attributeData is an encoded index, older versions store the method index directly
+            if (Version >= 104)
+            {
+                return GetDecodedMethodIndex(index);
+            }
+            return index;
         }
 
         public uint GetDecodedMethodIndex(uint index)

@@ -24,7 +24,7 @@ namespace Il2CppDumper
         public string GetStringCustomAttributeData()
         {
             BaseStream.Position = ctorBuffer;
-            var ctorIndex = ReadInt32();
+            var ctorIndex = (int)metadata.GetAttributeCtorMethodIndex(ReadUInt32());
             var methodDef = metadata.methodDefs[ctorIndex];
             var typeDef = metadata.typeDefs[methodDef.declaringType];
             ctorBuffer = BaseStream.Position;
@@ -100,7 +100,7 @@ namespace Il2CppDumper
             var visitor = new CustomAttributeReaderVisitor();
 
             BaseStream.Position = ctorBuffer;
-            var ctorIndex = ReadInt32();
+            var ctorIndex = (int)metadata.GetAttributeCtorMethodIndex(ReadUInt32());
             visitor.CtorIndex = ctorIndex;
             var methodDef = metadata.methodDefs[ctorIndex];
             var typeDef = metadata.typeDefs[methodDef.declaringType];
@@ -160,7 +160,10 @@ namespace Il2CppDumper
             memberIndex = -(memberIndex + 1);
 
             var typeIndex = this.ReadCompressedUInt32();
-            var declaringClass = metadata.typeDefs[typeIndex];
+            //since v104 the declaring type is referenced by type index instead of typeDefinitionIndex
+            var declaringClass = metadata.Version >= 104
+                ? executor.GetTypeDefinitionFromTypeIndex(typeIndex)
+                : metadata.typeDefs[typeIndex];
 
             return (declaringClass, memberIndex);
         }
