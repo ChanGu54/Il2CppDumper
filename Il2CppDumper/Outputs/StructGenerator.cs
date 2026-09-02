@@ -26,11 +26,19 @@ namespace Il2CppDumper
         private readonly StringBuilder arrayClassHeader = new();
         private readonly StringBuilder methodInfoHeader = new();
         private static readonly HashSet<ulong> methodInfoCache = new();
+        //a "_" prefix is enough for these
         private static readonly HashSet<string> keyword = new(StringComparer.Ordinal)
         { "klass", "monitor", "register", "_cs", "auto", "friend", "template", "flat", "default", "_ds", "interrupt",
-            "unsigned", "signed", "asm", "if", "case", "break", "continue", "do", "new", "_", "short", "union", "class", "namespace"};
+            "unsigned", "if", "case", "break", "continue", "do", "new", "_", "short", "union", "class", "namespace",
+            "int", "char", "long", "float", "double", "void", "struct", "enum", "typedef", "sizeof", "return",
+            "goto", "for", "while", "else", "switch", "static", "extern"};
+        //"_name" is still a keyword for these (MSVC/GCC aliases), so wrap it
         private static readonly HashSet<string> specialKeywords = new(StringComparer.Ordinal)
-        { "inline", "near", "far" };
+        { "near", "far", "signed", "const", "restrict", "cdecl", "stdcall", "fastcall", "vectorcall", "rustcall",
+            "pascal", "Bool", "Alignas", "Alignof", "Noreturn", "Pragma", "Thread_local" };
+        //any number of surrounding "_" still matches the keyword for these, so end with a digit
+        private static readonly HashSet<string> underscoreProofKeywords = new(StringComparer.Ordinal)
+        { "asm", "inline", "volatile", "extension" };
 
         public StructGenerator(Il2CppExecutor il2CppExecutor)
         {
@@ -533,6 +541,10 @@ namespace Il2CppDumper
             else if (specialKeywords.Contains(str))
             {
                 str = "_" + str + "_";
+            }
+            else if (underscoreProofKeywords.Contains(str))
+            {
+                str = "_" + str + "_0";
             }
 
             if (Regex.IsMatch(str, "^[0-9]"))
