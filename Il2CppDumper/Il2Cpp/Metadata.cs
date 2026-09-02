@@ -381,7 +381,7 @@ namespace Il2CppDumper
 
         private void SetupMetadataIndexSizes()
         {
-            static int GetIndexSize(int count) => count < byte.MaxValue ? 1 : count < ushort.MaxValue ? 2 : 4;
+            static int GetIndexSize(int count) => count <= byte.MaxValue ? 1 : count <= ushort.MaxValue ? 2 : 4;
             static int GetSectionItemSize(Il2CppSectionMetadata section, int fallback)
             {
                 return section != null && section.count > 0 ? section.sectionSize / section.count : fallback;

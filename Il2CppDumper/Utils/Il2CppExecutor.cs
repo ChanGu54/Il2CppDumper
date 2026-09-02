@@ -103,6 +103,10 @@ namespace Il2CppDumper
                         {
                             typeDef = GetTypeDefinitionFromIl2CppType(il2CppType);
                         }
+                        if (typeDef == null)
+                        {
+                            return "Unknown";
+                        }
                         if (typeDef.declaringTypeIndex != -1)
                         {
                             str += GetTypeName(il2Cpp.types[typeDef.declaringTypeIndex], addNamespace, true);
