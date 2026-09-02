@@ -125,6 +125,9 @@ Il2CppDumper.exe <executable-file> <global-metadata> <output-directory>
 * `NoRedirectedPointer`
   * 将dump文件中的指针视为未重定向的, 从某些设备dump出的文件需要设置该项为`true`
 
+* `DisablePlusSearch`
+  * 跳过`PlusSearch`，不进行可能在部分dump的GameAssembly.dll（多为Unity 2021.3）上崩溃的版本自动校正。找不到地址时回退到手动输入
+
 ## 编译
 
 ```

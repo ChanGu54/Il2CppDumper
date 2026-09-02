@@ -129,6 +129,9 @@ BinaryNinja용입니다.
 * `NoRedirectedPointer`
   * 덤프 파일의 포인터를 리다이렉트되지 않은 것으로 처리합니다. 일부 기기에서 덤프한 파일은 이 옵션을 `true`로 설정해야 합니다
 
+* `DisablePlusSearch`
+  * `PlusSearch`를 건너뛰고 버전 자동 보정을 하지 않은 채 CodeRegistration/MetadataRegistration을 찾습니다. 일부 덤프된 GameAssembly.dll(주로 Unity 2021.3)에서 발생하는 크래시를 피할 수 있습니다. 주소를 못 찾으면 수동 입력으로 넘어갑니다
+
 ## 빌드
 
 ```

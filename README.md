@@ -129,6 +129,9 @@ Available options:
 * `NoRedirectedPointer`
   * Treat pointers in dumped files as unredirected, This option needs to be `true` for files dumped from some devices
 
+* `DisablePlusSearch`
+  * Skip `PlusSearch` and look up CodeRegistration/MetadataRegistration without the version auto-adjust that can crash on some dumped GameAssembly.dll files (mostly Unity 2021.3). Falls back to manual input if the addresses are not found
+
 ## Build
 
 ```
