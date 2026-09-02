@@ -806,16 +806,29 @@ namespace Il2CppDumper
             {
                 var vTableIndex = typeDef.vtableStart + i;
                 var encodedMethodIndex = metadata.vtableMethods[vTableIndex];
-                var usage = Metadata.GetEncodedIndexType(encodedMethodIndex);
+                //the stored usage enum shifted after v106.1, so decode it version aware
+                var usage = metadata.GetEncodedIndexTypeForVersion(encodedMethodIndex);
                 var index = metadata.GetDecodedMethodIndex(encodedMethodIndex);
                 Il2CppMethodDefinition methodDef;
-                if (usage == 6) //kIl2CppMetadataUsageMethodRef
+                if (usage == (uint)Il2CppMetadataUsage.kIl2CppMetadataUsageMethodRef)
                 {
+                    if (index >= il2Cpp.methodSpecs.Length)
+                    {
+                        continue;
+                    }
                     var methodSpec = il2Cpp.methodSpecs[index];
+                    if (methodSpec.methodDefinitionIndex < 0 || methodSpec.methodDefinitionIndex >= metadata.methodDefs.Length)
+                    {
+                        continue;
+                    }
                     methodDef = metadata.methodDefs[methodSpec.methodDefinitionIndex];
                 }
                 else
                 {
+                    if (index >= metadata.methodDefs.Length)
+                    {
+                        continue;
+                    }
                     methodDef = metadata.methodDefs[index];
                 }
                 if (methodDef.slot != ushort.MaxValue)
