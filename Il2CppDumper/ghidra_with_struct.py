@@ -69,8 +69,11 @@ def set_sig(addr, name, sig):
 		print(sig)
 		print("Attempting to modify...")
 		# try to fix by renaming the parameters
+		newSig = sig
 		try:
-			newSig = sig.replace(", ","ext, ").replace("\)","ext\)")
+			paramEnd = sig.rindex(")")
+			if sig[sig.index("(") + 1:paramEnd].strip():
+				newSig = sig[:paramEnd].replace(", ", "ext, ") + "ext" + sig[paramEnd:]
 			typeSig = CParserUtils.parseSignature(None, currentProgram, newSig, False)
 		except:
 			print("Warning: also unable to parse")
