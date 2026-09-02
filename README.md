@@ -1,6 +1,6 @@
 # Il2CppDumper
 
-[![Build status](https://ci.appveyor.com/api/projects/status/anhqw33vcpmp8ofa?svg=true)](https://ci.appveyor.com/project/Perfare/il2cppdumper/branch/master/artifacts)
+Maintained by [ChanGu54](https://github.com/ChanGu54)
 
 中文说明请戳[这里](README.zh-CN.md)
 
@@ -143,7 +143,7 @@ Targets `net6.0` and `net8.0`, the only dependency is `Mono.Cecil`
 
 Make sure you choose the correct file. Sometimes games may obfuscate this file for content protection purposes and so on. Deobfuscating of such files is beyond the scope of this program, so please **DO NOT** file an issue regarding to deobfuscating.
 
-If your file is `libil2cpp.so` and you have a rooted Android phone, you can try my other project [Zygisk-Il2CppDumper](https://github.com/Perfare/Zygisk-Il2CppDumper), it can bypass this protection.
+If your file is `libil2cpp.so` and you have a rooted Android phone, you can try [Zygisk-Il2CppDumper](https://github.com/Perfare/Zygisk-Il2CppDumper), it can bypass this protection.
 
 #### `ERROR: Metadata file supplied is not a supported version[x].`
 
@@ -153,14 +153,13 @@ The metadata version is outside the supported range (16 - 108), the file is eith
 
 Please note that the executable file for the PC platform is `GameAssembly.dll` or `*Assembly.dll`
 
-You can open a new issue and upload the file, I will try to solve.
+You can open a new issue and upload the file.
 
 #### `ERROR: This file may be protected.`
 
 Il2CppDumper detected that the executable file has been protected, use `GameGuardian` to dump `libil2cpp.so` from the game memory, then use Il2CppDumper to load and follow the prompts, can bypass most protections.
 
-If you have a rooted Android phone, you can try my other project [Zygisk-Il2CppDumper](https://github.com/Perfare/Zygisk-Il2CppDumper), it can bypass almost all protections.
-
 ## Credits
 
+- Perfare - [Il2CppDumper](https://github.com/Perfare/Il2CppDumper)
 - Jumboperson - [Il2CppDumper](https://github.com/Jumboperson/Il2CppDumper)

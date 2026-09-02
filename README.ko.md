@@ -1,6 +1,6 @@
 # Il2CppDumper
 
-[![Build status](https://ci.appveyor.com/api/projects/status/anhqw33vcpmp8ofa?svg=true)](https://ci.appveyor.com/project/Perfare/il2cppdumper/branch/master/artifacts)
+관리자: [ChanGu54](https://github.com/ChanGu54)
 
 English: [README.md](README.md)
 
@@ -143,7 +143,7 @@ dotnet build Il2CppDumper.sln
 
 올바른 파일을 선택했는지 확인하세요. 어떤 게임은 콘텐츠 보호 등을 위해 이 파일을 난독화하기도 합니다. 이러한 파일의 난독화 해제는 이 프로그램의 범위를 벗어나므로, 난독화 해제와 관련한 이슈는 **제출하지 마세요**.
 
-파일이 `libil2cpp.so`이고 루팅된 Android 폰이 있다면, 다른 프로젝트인 [Zygisk-Il2CppDumper](https://github.com/Perfare/Zygisk-Il2CppDumper)를 사용해 볼 수 있습니다. 이 보호를 우회할 수 있습니다.
+파일이 `libil2cpp.so`이고 루팅된 Android 폰이 있다면, [Zygisk-Il2CppDumper](https://github.com/Perfare/Zygisk-Il2CppDumper)를 사용해 볼 수 있습니다. 이 보호를 우회할 수 있습니다.
 
 #### `ERROR: Metadata file supplied is not a supported version[x].`
 
@@ -153,14 +153,13 @@ dotnet build Il2CppDumper.sln
 
 PC 플랫폼의 실행 파일은 `GameAssembly.dll` 또는 `*Assembly.dll`입니다.
 
-새 이슈를 열고 파일을 업로드해 주시면 해결을 시도하겠습니다.
+새 이슈를 열고 파일을 업로드해 주세요.
 
 #### `ERROR: This file may be protected.`
 
 Il2CppDumper가 실행 파일이 보호되어 있음을 감지했습니다. `GameGuardian`으로 게임 메모리에서 `libil2cpp.so`를 덤프한 뒤 Il2CppDumper로 로드하고 안내에 따르면, 대부분의 보호를 우회할 수 있습니다.
 
-루팅된 Android 폰이 있다면, 다른 프로젝트인 [Zygisk-Il2CppDumper](https://github.com/Perfare/Zygisk-Il2CppDumper)를 사용해 볼 수 있습니다. 거의 모든 보호를 우회할 수 있습니다.
-
 ## 크레딧
 
+- Perfare - [Il2CppDumper](https://github.com/Perfare/Il2CppDumper)
 - Jumboperson - [Il2CppDumper](https://github.com/Jumboperson/Il2CppDumper)

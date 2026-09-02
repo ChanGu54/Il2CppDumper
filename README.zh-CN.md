@@ -1,6 +1,6 @@
 # Il2CppDumper
 
-[![Build status](https://ci.appveyor.com/api/projects/status/anhqw33vcpmp8ofa?svg=true)](https://ci.appveyor.com/project/Perfare/il2cppdumper/branch/master/artifacts)
+维护者：[ChanGu54](https://github.com/ChanGu54)
 
 English: [README.md](README.md)
 
@@ -139,7 +139,7 @@ dotnet build Il2CppDumper.sln
 
 global-metadata.dat已被加密。关于解密的问题请去相关破解论坛寻求帮助，请不要在issues提问！
 
-如果你的文件是`libil2cpp.so`并且你拥有一台已root的安卓手机，你可以尝试我的另一个项目[Zygisk-Il2CppDumper](https://github.com/Perfare/Zygisk-Il2CppDumper)，它能够无视global-metadata.dat加密
+如果你的文件是`libil2cpp.so`并且你拥有一台已root的安卓手机，你可以尝试[Zygisk-Il2CppDumper](https://github.com/Perfare/Zygisk-Il2CppDumper)，它能够无视global-metadata.dat加密
 
 #### `ERROR: Metadata file supplied is not a supported version[x].`
 
@@ -149,14 +149,13 @@ metadata版本超出支持范围（16 - 108），该文件来自比当前版本�
 
 请注意PC平台的可执行文件是`GameAssembly.dll`或者`*Assembly.dll`
 
-你可以打开一个新的issue，并上传文件，我会尝试解决
+你可以打开一个新的issue，并上传文件
 
 #### `ERROR: This file may be protected.`
 
 Il2CppDumper检测到可执行文件已被保护，使用`GameGuardian`从游戏内存中dump `libil2cpp.so`，然后使用Il2CppDumper载入按提示操作，可绕过大部分保护
 
-如果你拥有一台已root的安卓手机，你可以尝试我的另一个项目[Zygisk-Il2CppDumper](https://github.com/Perfare/Zygisk-Il2CppDumper)，它能够绕过几乎所有保护
-
 ## 感谢
 
+- Perfare - [Il2CppDumper](https://github.com/Perfare/Il2CppDumper)
 - Jumboperson - [Il2CppDumper](https://github.com/Jumboperson/Il2CppDumper)
