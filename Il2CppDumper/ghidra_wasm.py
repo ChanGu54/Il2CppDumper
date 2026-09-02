@@ -50,8 +50,7 @@ if "ScriptMethod" in data and "ScriptMethod" in processFields:
 		symbol = currentProgram.symbolTable.getSymbols(symbolName, dynCallNamespace)
 		if len(symbol) > 0:
 			addr = symbol[0].address
-			name = scriptMethod["Name"].encode("utf-8")
-			set_name(addr, name)
+			name = scriptMethod["Name"]			set_name(addr, name)
 		else:
 			print "Warning at %s:" % scriptMethod["Name"]
 			print "Symbol %s not found!" % symbolName
@@ -64,8 +63,7 @@ if "ScriptString" in data and "ScriptString" in processFields:
 	monitor.setMessage("Strings")
 	for scriptString in scriptStrings:
 		addr = get_addr(scriptString["Address"])
-		value = scriptString["Value"].encode("utf-8")
-		name = "StringLiteral_" + str(index)
+		value = scriptString["Value"]		name = "StringLiteral_" + str(index)
 		createLabel(addr, name, True, USER_DEFINED)
 		setEOLComment(addr, value)
 		index += 1
@@ -77,8 +75,7 @@ if "ScriptMetadata" in data and "ScriptMetadata" in processFields:
 	monitor.setMessage("Metadata")
 	for scriptMetadata in scriptMetadatas:
 		addr = get_addr(scriptMetadata["Address"])
-		name = scriptMetadata["Name"].encode("utf-8")
-		set_name(addr, name)
+		name = scriptMetadata["Name"]		set_name(addr, name)
 		setEOLComment(addr, name)
 		monitor.incrementProgress(1)
 
@@ -88,8 +85,7 @@ if "ScriptMetadataMethod" in data and "ScriptMetadataMethod" in processFields:
 	monitor.setMessage("Metadata Methods")
 	for scriptMetadataMethod in scriptMetadataMethods:
 		addr = get_addr(scriptMetadataMethod["Address"])
-		name = scriptMetadataMethod["Name"].encode("utf-8")
-		methodAddr = get_addr(scriptMetadataMethod["MethodAddress"])
+		name = scriptMetadataMethod["Name"]		methodAddr = get_addr(scriptMetadataMethod["MethodAddress"])
 		set_name(addr, name)
 		setEOLComment(addr, name)
 		monitor.incrementProgress(1)
