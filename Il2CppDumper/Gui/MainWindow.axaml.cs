@@ -29,7 +29,7 @@ namespace Il2CppDumper
         {
             if (!Dispatcher.UIThread.CheckAccess())
             {
-                Dispatcher.UIThread.Post(() => AppendLog(text, newLine));
+                Dispatcher.UIThread.Invoke(() => AppendLog(text, newLine));
                 return;
             }
 
@@ -127,6 +127,12 @@ namespace Il2CppDumper
             {
                 outputDir = AppDomain.CurrentDomain.BaseDirectory;
             }
+            outputDir = NormalizeOutputDir(outputDir);
+            if (string.IsNullOrEmpty(outputDir))
+            {
+                AppendLog("ERROR: Output folder not found.", true);
+                return;
+            }
             Directory.CreateDirectory(outputDir);
             outputDir = Path.GetFullPath(outputDir) + Path.DirectorySeparatorChar;
 
@@ -136,6 +142,7 @@ namespace Il2CppDumper
             DumpButton.IsEnabled = false;
             LogBox.Text = "";
             var host = new GuiDumperHost(this);
+            var succeeded = false;
             try
             {
                 await Task.Run(() =>
@@ -143,6 +150,7 @@ namespace Il2CppDumper
                     if (DumperEngine.Init(il2cppPath, metadataPath, Program.Config, host, out var metadata, out var il2Cpp))
                     {
                         DumperEngine.Dump(metadata, il2Cpp, outputDir, Program.Config, host);
+                        succeeded = true;
                     }
                 });
             }
@@ -158,34 +166,99 @@ namespace Il2CppDumper
             {
                 DumpButton.IsEnabled = true;
             }
+
+            if (succeeded)
+            {
+                AppendLog($"Dump completed: {outputDir}", true);
+                OpenOutputFolder(outputDir);
+            }
         }
 
         private void OnOpenOutputClick(object sender, RoutedEventArgs e)
         {
-            var outputDir = OutputDirBox.Text?.Trim();
+            var outputDir = NormalizeOutputDir(OutputDirBox.Text);
             if (string.IsNullOrEmpty(outputDir) || !Directory.Exists(outputDir))
             {
                 AppendLog("ERROR: Output folder not found.", true);
                 return;
             }
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            OpenOutputFolder(outputDir);
+        }
+
+        private void OpenOutputFolder(string outputDir)
+        {
+            outputDir = NormalizeOutputDir(outputDir);
+            if (string.IsNullOrEmpty(outputDir) || !Directory.Exists(outputDir))
             {
-                Process.Start(new ProcessStartInfo("explorer", outputDir) { UseShellExecute = true });
+                AppendLog("ERROR: Output folder not found.", true);
+                return;
             }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+
+            try
             {
-                Process.Start("open", outputDir);
+                var psi = new ProcessStartInfo
+                {
+                    UseShellExecute = false,
+                    RedirectStandardError = true,
+                    RedirectStandardOutput = true
+                };
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    psi.FileName = "explorer";
+                    psi.ArgumentList.Add(outputDir);
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    psi.FileName = "open";
+                    psi.ArgumentList.Add(outputDir);
+                }
+                else
+                {
+                    psi.FileName = "xdg-open";
+                    psi.ArgumentList.Add(outputDir);
+                }
+
+                using (var process = Process.Start(psi))
+                {
+                    if (process == null)
+                    {
+                        AppendLog("ERROR: Failed to open output folder.", true);
+                        return;
+                    }
+                    var error = process.StandardError.ReadToEnd();
+                    process.WaitForExit(5000);
+                    if (!string.IsNullOrWhiteSpace(error))
+                    {
+                        AppendLog(error.Trim(), true);
+                    }
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Process.Start("xdg-open", outputDir);
+                AppendLog($"ERROR: Failed to open output folder. {ex.Message}", true);
             }
+        }
+
+        private static string NormalizeOutputDir(string outputDir)
+        {
+            if (string.IsNullOrWhiteSpace(outputDir))
+            {
+                return null;
+            }
+
+            var lines = outputDir.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            if (lines.Length == 0)
+            {
+                return null;
+            }
+            return lines[0].Trim().Trim('"');
         }
 
         private void OnDragOver(object sender, DragEventArgs e)
         {
             e.DragEffects = e.DataTransfer?.Contains(DataFormat.File) == true ? DragDropEffects.Copy : DragDropEffects.None;
+            e.Handled = true;
         }
 
         private void OnDrop(object sender, DragEventArgs e)
@@ -196,6 +269,7 @@ namespace Il2CppDumper
                 return;
             }
 
+            e.Handled = true;
             foreach (var item in items)
             {
                 var path = item.TryGetLocalPath();

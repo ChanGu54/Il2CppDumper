@@ -17,6 +17,7 @@ Unity il2cpp reverse engineer
 * Supports generate structures header file
 * Supports Android memory dumped `libil2cpp.so` file to bypass protection
 * Support bypassing simple PE protection
+* Windows and macOS GUI, added and maintained by ChanGu54
 
 ## Usage
 
@@ -26,7 +27,7 @@ Run `Il2CppDumper` with no arguments to open the GUI (Windows and macOS). Choose
 
 You can also drag and drop files onto the window.
 
-The program writes output files to the folder you selected (the application directory by default).
+When the dump finishes, the log shows the output path and the output folder opens automatically. The program writes output files to the folder you selected (the application directory by default).
 
 ### Command-line
 
