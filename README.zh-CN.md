@@ -15,11 +15,13 @@ Unity il2cpp 逆向工程
 * 生成结构体头文件
 * 支持从 Android 内存 dump 的 `libil2cpp.so`，可用于绕过部分保护
 * 支持绕过简单的 PE 保护
-* 提供 Windows 和 macOS GUI，由 ChanGu54 添加并维护
+* 提供 Windows 和 macOS GUI
 
 ## 使用说明
 
 需要 [.NET 8.0 运行时](https://dotnet.microsoft.com/download)。
+
+### GUI
 
 不带参数运行 `Il2CppDumper` 会打开 GUI（Windows 和 macOS）。选择 il2cpp 可执行文件、`global-metadata.dat` 和输出目录，然后点击 Dump。
 
@@ -29,9 +31,13 @@ dump 完成后，日志会显示输出路径，并自动打开输出目录。输
 
 ### 命令行
 
+传入 il2cpp 可执行文件、`global-metadata.dat` 和输出目录：
+
 ```
 Il2CppDumper.exe <executable-file> <global-metadata> <output-directory>
 ```
+
+省略输出目录时，文件会写入程序所在目录。
 
 ### 输出文件
 

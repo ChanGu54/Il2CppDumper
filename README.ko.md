@@ -15,11 +15,13 @@ Unity il2cpp 리버스 엔지니어링
 * 구조체 헤더 파일을 생성합니다.
 * Android 메모리에서 덤프한 `libil2cpp.so`를 지원합니다. 일부 보호를 우회하는 데 사용할 수 있습니다.
 * 간단한 PE 보호를 우회할 수 있습니다.
-* Windows와 macOS용 GUI를 제공합니다. ChanGu54가 추가하고 유지보수합니다.
+* Windows와 macOS용 GUI를 제공합니다.
 
 ## 사용법
 
 [.NET 8.0 런타임](https://dotnet.microsoft.com/download)이 필요합니다.
+
+### GUI
 
 인자 없이 `Il2CppDumper`를 실행하면 Windows와 macOS에서 GUI가 열립니다. il2cpp 실행 파일, `global-metadata.dat`, 출력 폴더를 선택한 다음 Dump를 누르세요.
 
@@ -29,9 +31,13 @@ Unity il2cpp 리버스 엔지니어링
 
 ### 명령줄
 
+il2cpp 실행 파일, `global-metadata.dat`, 출력 디렉터리를 인자로 넘깁니다.
+
 ```
 Il2CppDumper.exe <executable-file> <global-metadata> <output-directory>
 ```
+
+출력 디렉터리를 생략하면 프로그램이 있는 디렉터리에 저장됩니다.
 
 ### 출력
 

@@ -15,11 +15,13 @@ Unity il2cpp reverse engineering
 * Generates a header file with structure definitions
 * Supports `libil2cpp.so` dumped from Android memory, which can help bypass some protections
 * Can bypass simple PE protections
-* Includes a Windows and macOS GUI, added and maintained by ChanGu54
+* Includes a Windows and macOS GUI
 
 ## Usage
 
 Requires the [.NET 8.0 runtime](https://dotnet.microsoft.com/download).
+
+### GUI
 
 Run `Il2CppDumper` with no arguments to open the GUI on Windows and macOS. Choose the il2cpp executable, `global-metadata.dat`, and an output folder, then click Dump.
 
@@ -29,9 +31,13 @@ When the dump finishes, the log shows the output path and the output folder open
 
 ### Command-line
 
+Pass the il2cpp executable, `global-metadata.dat`, and an output directory:
+
 ```
 Il2CppDumper.exe <executable-file> <global-metadata> <output-directory>
 ```
+
+If the output directory is omitted, files are written to the application directory.
 
 ### Outputs
 
