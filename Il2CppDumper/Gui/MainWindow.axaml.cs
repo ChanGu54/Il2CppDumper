@@ -20,6 +20,7 @@ namespace Il2CppDumper
             DummyDllCheck.IsChecked = Program.Config.GenerateDummyDll;
             StructCheck.IsChecked = Program.Config.GenerateStruct;
             OutputDirBox.Text = AppDomain.CurrentDomain.BaseDirectory;
+            StarLink.NavigateUri = new Uri(Program.GitHubRepoUrl);
             AddHandler(DragDrop.DragOverEvent, OnDragOver);
             AddHandler(DragDrop.DropEvent, OnDrop);
             DragDrop.SetAllowDrop(this, true);
@@ -143,6 +144,7 @@ namespace Il2CppDumper
             LogBox.Text = "";
             var host = new GuiDumperHost(this);
             var succeeded = false;
+            var cancelled = false;
             try
             {
                 await Task.Run(() =>
@@ -156,6 +158,7 @@ namespace Il2CppDumper
             }
             catch (OperationCanceledException)
             {
+                cancelled = true;
                 AppendLog("Cancelled.", true);
             }
             catch (Exception ex)
@@ -171,6 +174,10 @@ namespace Il2CppDumper
             {
                 AppendLog($"Dump completed: {outputDir}", true);
                 OpenOutputFolder(outputDir);
+            }
+            else if (!cancelled)
+            {
+                GuideToIssues();
             }
         }
 
@@ -253,6 +260,55 @@ namespace Il2CppDumper
                 return null;
             }
             return lines[0].Trim().Trim('"');
+        }
+
+        private void GuideToIssues()
+        {
+            AppendLog($"Please report this issue: {Program.GitHubIssuesUrl}", true);
+            OpenUrl(Program.GitHubIssuesUrl);
+        }
+
+        private async void OpenUrl(string url)
+        {
+            try
+            {
+                var launcher = TopLevel.GetTopLevel(this)?.Launcher;
+                if (launcher != null)
+                {
+                    await launcher.LaunchUriAsync(new Uri(url));
+                    return;
+                }
+
+                var psi = new ProcessStartInfo
+                {
+                    UseShellExecute = false,
+                    RedirectStandardError = true,
+                    RedirectStandardOutput = true
+                };
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    psi.FileName = "cmd";
+                    psi.ArgumentList.Add("/c");
+                    psi.ArgumentList.Add("start");
+                    psi.ArgumentList.Add("");
+                    psi.ArgumentList.Add(url);
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    psi.FileName = "open";
+                    psi.ArgumentList.Add(url);
+                }
+                else
+                {
+                    psi.FileName = "xdg-open";
+                    psi.ArgumentList.Add(url);
+                }
+                Process.Start(psi)?.Dispose();
+            }
+            catch (Exception ex)
+            {
+                AppendLog($"ERROR: Failed to open {url}. {ex.Message}", true);
+            }
         }
 
         private void OnDragOver(object sender, DragEventArgs e)

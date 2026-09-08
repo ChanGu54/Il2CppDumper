@@ -8,6 +8,8 @@ namespace Il2CppDumper
     class Program
     {
         internal static Config Config;
+        internal const string GitHubRepoUrl = "https://github.com/ChanGu54/Il2CppDumper";
+        internal const string GitHubIssuesUrl = "https://github.com/ChanGu54/Il2CppDumper/issues";
 
         [STAThread]
         static void Main(string[] args)
@@ -88,10 +90,15 @@ namespace Il2CppDumper
                     {
                         DumperEngine.Dump(metadata, il2Cpp, outputDir, config, host);
                     }
+                    else
+                    {
+                        Console.WriteLine($"Please report this issue: {GitHubIssuesUrl}");
+                    }
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
+                    Console.WriteLine($"Please report this issue: {GitHubIssuesUrl}");
                 }
             }
             if (config.RequireAnyKey)

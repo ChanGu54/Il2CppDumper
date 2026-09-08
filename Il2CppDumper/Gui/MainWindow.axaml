@@ -22,6 +22,21 @@
                 <Button x:Name="DumpButton" Content="Dump" MinWidth="120" Click="OnDumpClick" />
                 <Button x:Name="OpenOutputButton" Content="Open output folder" Click="OnOpenOutputClick" />
             </StackPanel>
+            <WrapPanel>
+                <TextBlock Text="If you like Il2CppDumper, please "
+                           Opacity="0.75"
+                           FontSize="12"
+                           VerticalAlignment="Center" />
+                <HyperlinkButton x:Name="StarLink"
+                                 Content="star the repo on GitHub"
+                                 FontSize="12"
+                                 Padding="0"
+                                 VerticalAlignment="Center" />
+                <TextBlock Text="."
+                           Opacity="0.75"
+                           FontSize="12"
+                           VerticalAlignment="Center" />
+            </WrapPanel>
         </StackPanel>
 
         <Grid RowDefinitions="Auto,Auto,Auto,Auto,*" ColumnDefinitions="140,* ,88" RowSpacing="8" ColumnSpacing="8">
