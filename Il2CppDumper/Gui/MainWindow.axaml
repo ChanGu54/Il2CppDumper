@@ -1,0 +1,52 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Il2CppDumper.MainWindow"
+        Title="Il2CppDumper"
+        Width="760"
+        Height="620"
+        MinWidth="560"
+        MinHeight="420"
+        WindowStartupLocation="CenterScreen">
+    <DockPanel Margin="16">
+        <TextBlock DockPanel.Dock="Top"
+                   Text="Select the il2cpp binary, global-metadata.dat, and an output folder."
+                   Opacity="0.7"
+                   Margin="0,0,0,12" />
+
+        <StackPanel DockPanel.Dock="Bottom" Spacing="10" Margin="0,12,0,0">
+            <StackPanel Orientation="Horizontal" Spacing="16">
+                <CheckBox x:Name="DummyDllCheck" Content="Generate DummyDll" />
+                <CheckBox x:Name="StructCheck" Content="Generate struct / scripts" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <Button x:Name="DumpButton" Content="Dump" MinWidth="120" Click="OnDumpClick" />
+                <Button x:Name="OpenOutputButton" Content="Open output folder" Click="OnOpenOutputClick" />
+            </StackPanel>
+        </StackPanel>
+
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto,*" ColumnDefinitions="140,* ,88" RowSpacing="8" ColumnSpacing="8">
+            <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Il2Cpp binary" />
+            <TextBox x:Name="Il2CppPathBox" Grid.Row="0" Grid.Column="1" Watermark="GameAssembly.dll / libil2cpp.so / ..." />
+            <Button Grid.Row="0" Grid.Column="2" Content="Browse" Click="OnBrowseIl2Cpp" />
+
+            <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Metadata" />
+            <TextBox x:Name="MetadataPathBox" Grid.Row="1" Grid.Column="1" Watermark="global-metadata.dat" />
+            <Button Grid.Row="1" Grid.Column="2" Content="Browse" Click="OnBrowseMetadata" />
+
+            <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="Output folder" />
+            <TextBox x:Name="OutputDirBox" Grid.Row="2" Grid.Column="1" />
+            <Button Grid.Row="2" Grid.Column="2" Content="Browse" Click="OnBrowseOutput" />
+
+            <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Text="Log" Margin="0,8,0,0" />
+            <TextBox x:Name="LogBox"
+                     Grid.Row="4"
+                     Grid.Column="0"
+                     Grid.ColumnSpan="3"
+                     IsReadOnly="True"
+                     AcceptsReturn="True"
+                     TextWrapping="Wrap"
+                     FontFamily="Menlo, Consolas, Courier New, monospace"
+                     FontSize="12" />
+        </Grid>
+    </DockPanel>
+</Window>

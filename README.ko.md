@@ -22,9 +22,11 @@ Unity il2cpp 리버스 엔지니어링
 
 [.NET 8.0 런타임](https://dotnet.microsoft.com/download)이 필요합니다.
 
-`Il2CppDumper.exe`를 실행한 뒤 il2cpp 실행 파일과 `global-metadata.dat` 파일을 선택하고, 안내에 따라 정보를 입력하세요.
+인자 없이 `Il2CppDumper`를 실행하면 Windows와 macOS에서 GUI가 열립니다. il2cpp 실행 파일, `global-metadata.dat`, 출력 폴더를 선택한 뒤 Dump를 누르세요.
 
-이후 프로그램은 현재 작업 디렉터리에 모든 출력 파일을 생성합니다.
+파일을 창으로 끌어다 놓을 수도 있습니다.
+
+출력 파일은 선택한 폴더에 생성됩니다. 기본값은 프로그램이 있는 디렉터리입니다.
 
 ### 명령줄
 

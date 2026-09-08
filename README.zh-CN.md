@@ -22,9 +22,11 @@ Unity il2cpp逆向工程
 
 需要[.NET 8.0运行时](https://dotnet.microsoft.com/download)。
 
-直接运行Il2CppDumper.exe并依次选择il2cpp的可执行文件和global-metadata.dat文件，然后根据提示输入相应信息。
+不带参数运行 `Il2CppDumper` 会打开 GUI（Windows 和 macOS）。选择 il2cpp 可执行文件、`global-metadata.dat` 和输出目录，然后点击 Dump。
 
-程序运行完成后将在当前运行目录下生成输出文件
+也可以把文件拖放到窗口中。
+
+输出文件会写入所选目录（默认是程序所在目录）。
 
 ### 命令行
 

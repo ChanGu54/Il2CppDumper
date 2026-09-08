@@ -22,9 +22,11 @@ Unity il2cpp reverse engineer
 
 Requires the [.NET 8.0 runtime](https://dotnet.microsoft.com/download).
 
-Run `Il2CppDumper.exe` and choose the il2cpp executable file and `global-metadata.dat` file, then enter the information as prompted
+Run `Il2CppDumper` with no arguments to open the GUI (Windows and macOS). Choose the il2cpp executable, `global-metadata.dat`, and an output folder, then click Dump.
 
-The program will then generate all the output files in current working directory
+You can also drag and drop files onto the window.
+
+The program writes output files to the folder you selected (the application directory by default).
 
 ### Command-line
 
