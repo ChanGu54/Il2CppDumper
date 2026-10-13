@@ -2,6 +2,9 @@
 
 유지보수: [ChanGu54](https://github.com/ChanGu54)
 
+> [!NOTE]
+> 원본 [Perfare/Il2CppDumper](https://github.com/Perfare/Il2CppDumper)는 더 이상 유지보수되지 않습니다. 이 포크는 새 Unity/il2cpp 버전 대응 업데이트만 하며, 업데이트는 AI로 작업합니다.
+
 [English](README.md) | [简体中文](README.zh-CN.md)
 
 Unity il2cpp 리버스 엔지니어링

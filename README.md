@@ -2,6 +2,9 @@
 
 Maintained by [ChanGu54](https://github.com/ChanGu54)
 
+> [!NOTE]
+> The original [Perfare/Il2CppDumper](https://github.com/Perfare/Il2CppDumper) is no longer maintained. This fork only keeps it up to date with new Unity/il2cpp versions, and those updates are made with AI.
+
 [简体中文](README.zh-CN.md) | [한국어](README.ko.md)
 
 Unity il2cpp reverse engineering

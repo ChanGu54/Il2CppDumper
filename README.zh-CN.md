@@ -2,6 +2,9 @@
 
 维护者：[ChanGu54](https://github.com/ChanGu54)
 
+> [!NOTE]
+> 原版 [Perfare/Il2CppDumper](https://github.com/Perfare/Il2CppDumper) 已不再维护。本 fork 仅跟进新的 Unity/il2cpp 版本，相关更新均借助 AI 完成。
+
 [English](README.md) | [한국어](README.ko.md)
 
 Unity il2cpp 逆向工程
